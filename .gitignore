@@ -1,0 +1,7 @@
+virtual
+*.pyc
+__pycache__
+db.sqlite3
+/static
+menyu/settings/secrets.py
+*/migrations/*.py
