@@ -9,10 +9,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
 
 
-SECRET_KEY = '=6r*+7@lt(2&6ccec5q9_vj9ld6s$sy)80(*==f@n6g_zk=vr-'
-
-
-
 
 # Application definition
 
@@ -102,4 +98,4 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, "static/")
+STATIC_ROOT = os.path.join(BASE_DIR, "../static/")
