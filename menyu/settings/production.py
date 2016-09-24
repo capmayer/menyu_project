@@ -1,3 +1,3 @@
 from .base import *
-ALLOWED_HOSTS = ['cardappyou.co', 'www.cardappyou.co']
+ALLOWED_HOSTS = ['menyu.com.br', 'www.menyu.com.br']
 DEBUG = False
