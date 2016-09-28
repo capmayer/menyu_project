@@ -14,9 +14,10 @@ class TabulationList(APIView):
         serializer.save(owner=self.request.user.id)
 
     def get(self, request, format=None):
-        tabulations = Tabulation.objects.all()
-        serializer = TabulationSerializer(tabulations, many=True)
-        return Response(serializer.data)
+        if request.establishment:
+            tabulations = Tabulation.objects.filter(establishment=request.establishment)
+            serializer = TabulationSerializer(tabulations, many=True)
+            return Response(serializer.data)
 
     def post(self, request, format=None):
         serializer = TabulationSerializer(data=request.data)
