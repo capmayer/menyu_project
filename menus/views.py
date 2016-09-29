@@ -9,12 +9,11 @@ from .models import Menu, Product, Category
 from .serializers import MenuSerializer, ProductSerializer, CategorySerializer
 
 
-# in the future this class will be not necessary, because de uuid
-# will be in the qrcode, so we dont have to get a list of menus
 class MenuList(APIView):
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user.id)
 
+    #should not exist
     def get(self, request, format=None):
         menus = Menu.objects.all()
         serializer = MenuSerializer(menus, many=True)
