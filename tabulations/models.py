@@ -30,5 +30,5 @@ class Order(models.Model): #pedido sao criados apos comanda já ter sido feita
     )
     state = models.CharField(max_length=2, choices=STATES, default='wa')
     def __str__(self):
-        return str(self.quantity) + " -  MESA: " + str(self.tabulation.origin)
-        #return str(self.quantity) + " - "+str(self.product) + " MESA: " + str(self.tabulation.origin)
+        #return str(self.quantity) + " -  MESA: " + str(self.tabulation.origin)
+        return str(self.quantity) + " - "+str(self.product) + " MESA: " + str(self.tabulation.origin)
