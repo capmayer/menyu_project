@@ -22,6 +22,7 @@ INSTALLED_APPS = [
 
     #3th apps
     'rest_framework',
+    'corsheaders',
 
     #menyu apps
     'tabulations',
@@ -38,6 +39,7 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'menyu.urls'
@@ -99,3 +101,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "../static/")
+
+
+#CORS HEADERS
+
+CORS_ORIGIN_ALLOW_ALL = True
