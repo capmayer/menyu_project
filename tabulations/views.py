@@ -6,8 +6,10 @@ from rest_framework.response import Response
 from rest_framework import status, generics
 from rest_framework.permissions import IsAuthenticated
 
+from menus.models import Product
+from menus.serializers import ProductSerializer
 from .models import Tabulation, Order
-from .serializers import TabulationSerializer, OrderSerializer
+from .serializers import TabulationSerializer, OrderSerializerWrite, OrderSerializerRead
 
 
 class TabulationList(APIView):
@@ -18,7 +20,6 @@ class TabulationList(APIView):
     def get(self, request, format=None):
         if request.user:
             establishment = self.request.user
-
             tabulations = Tabulation.objects.filter(establishment=establishment)
             serializer = TabulationSerializer(tabulations, many=True)
             return Response(serializer.data)
@@ -69,12 +70,12 @@ class OrderDetail(APIView):
 
     def get(self, request, uuid, format=None):
         order = self.get_object(uuid)
-        serializer = OrderSerializer(order)
+        serializer = OrderSerializerWrite(order)
         return Response(serializer.data)
 
     def put(self, request, uuid, format=None):
         order = self.get_object(uuid)
-        serializer = OrderSerializer(order, data=request.data, partial=True)
+        serializer = OrderSerializerWrite(order, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
@@ -92,11 +93,11 @@ class OrderList(APIView):
 
     def get(self, request, format=None):
         orders = Order.objects.all()
-        serializer = OrderSerializer(orders, many=True)
+        serializer = OrderSerializerRead(orders, many=True)
         return Response(serializer.data)
 
     def post(self, request, format=None):
-        serializer = OrderSerializer(data=request.data)
+        serializer = OrderSerializerWrite(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)

@@ -21,7 +21,7 @@ class Tabulation(models.Model): #cria a comanda ao entrar, mesmo sem ter pedido
 class Order(models.Model): #pedido sao criados apos comanda já ter sido feita
     uuid = models.UUIDField(default=uuid.uuid4, editable=False)
     quantity = models.IntegerField()
-    product = models.ForeignKey(Product)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
     tabulation = models.ForeignKey(Tabulation, on_delete=models.CASCADE, related_name='orders')
     STATES = (
         ('wa', 'Waiting'),
@@ -30,4 +30,5 @@ class Order(models.Model): #pedido sao criados apos comanda já ter sido feita
     )
     state = models.CharField(max_length=2, choices=STATES, default='wa')
     def __str__(self):
-        return str(self.quantity) + " - "+str(self.product) + " MESA: " + str(self.tabulation.origin)
+        return str(self.quantity) + " -  MESA: " + str(self.tabulation.origin)
+        #return str(self.quantity) + " - "+str(self.product) + " MESA: " + str(self.tabulation.origin)
