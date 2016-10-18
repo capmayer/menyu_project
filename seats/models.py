@@ -23,11 +23,9 @@ class Seat(models.Model):
         box_size=14,
         border=1,
         ) # create qrcode
-        print("aq 1")
         menu = Menu.objects.get(owner=instance.owner) # find the menu
         #fill the qrcode with uuid of the menu and the table number
         qr.add_data('"uuid": "'+ str(menu.uuid)+'", "table": ' + str(self.number))
-        print("aq 2")
         #make fit? dont know
         qr.make(fit=True)
         #define the name of the qrcode
@@ -59,7 +57,6 @@ class Seat(models.Model):
         #save the qrcode
 
         out.save(os.path.dirname(BASE_DIR)+"/media/" + qrcode_location(self, filename), "PNG")
-        print("aq 4")
         return qrcode_location(self, filename)
 
     def save(self):
