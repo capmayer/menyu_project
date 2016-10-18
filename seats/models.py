@@ -49,7 +49,7 @@ class Seat(models.Model):
         d = ImageDraw.Draw(txt)
         d.text((460, 32), str(self.number).zfill(2), font=fnt, fill=(255,255,255,255))
         out = Image.alpha_composite(background, txt)
-        out.show()
+        #out.show()
         #background.show()
         #save the qrcode
         background.save('media/' + qrcode_location(self, filename))
