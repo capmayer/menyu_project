@@ -20,4 +20,4 @@ class TabulationSerializer(serializers.ModelSerializer):
     orders = OrderSerializerRead(many=True, read_only=True)
     class Meta:
         model = Tabulation
-        fields = ('id', 'uuid', 'establishment', 'origin', 'date', 'state','value','orders')
+        fields = ('id', 'uuid', 'establishment', 'origin', 'date', 'state','value','registered','orders')
