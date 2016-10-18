@@ -1,9 +1,11 @@
 import qrcode
+import os
 from PIL import Image, ImageDraw, ImageFont
 from django.db import models
 from django.contrib.auth.models import User
 from menus.models import Menu
 from configs.models import Config, Qrcode
+from menyu.settings.base import BASE_DIR
 
 def qrcode_location(instance, filename):
     return '%s/qrcode/%s' % (instance.owner.username, filename)
@@ -21,9 +23,11 @@ class Seat(models.Model):
         box_size=14,
         border=1,
         ) # create qrcode
+        print("aq 1")
         menu = Menu.objects.get(owner=instance.owner) # find the menu
         #fill the qrcode with uuid of the menu and the table number
         qr.add_data('"uuid": "'+ str(menu.uuid)+'", "table": ' + str(self.number))
+        print("aq 2")
         #make fit? dont know
         qr.make(fit=True)
         #define the name of the qrcode
@@ -49,10 +53,13 @@ class Seat(models.Model):
         d = ImageDraw.Draw(txt)
         d.text((460, 32), str(self.number).zfill(2), font=fnt, fill=(255,255,255,255))
         out = Image.alpha_composite(background, txt)
-        #out.show()
+        if not(os.path.exists(os.path.dirname(BASE_DIR)+"/media/"+str(instance.owner)+"/qrcode/")):
+            os.makedirs(os.path.dirname(BASE_DIR)+"/media/"+str(instance.owner)+"/qrcode/")
         #background.show()
         #save the qrcode
-        background.save('media/' + qrcode_location(self, filename))
+
+        out.save(os.path.dirname(BASE_DIR)+"/media/" + qrcode_location(self, filename), "PNG")
+        print("aq 4")
         return qrcode_location(self, filename)
 
     def save(self):
