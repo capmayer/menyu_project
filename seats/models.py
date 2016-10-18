@@ -25,7 +25,7 @@ class Seat(models.Model):
         ) # create qrcode
         menu = Menu.objects.get(owner=instance.owner) # find the menu
         #fill the qrcode with uuid of the menu and the table number
-        qr.add_data('"uuid": "'+ str(menu.uuid)+'", "table": ' + str(self.number))
+        qr.add_data('"uuid": "'+ str(menu.uuid)+'", "table": ' + str(self.id))
         #make fit? dont know
         qr.make(fit=True)
         #define the name of the qrcode
@@ -60,9 +60,14 @@ class Seat(models.Model):
         return qrcode_location(self, filename)
 
     def save(self):
-        self.qrcode = self.qrcode_gerator(self)
-
         super(Seat, self).save()
+        print(self.pk)
+        print(self.id)
+        self.qrcode = self.qrcode_gerator(self)
+        super(Seat, self).save()
+
+
+
 
     def __str__(self):
         return str(self.owner)+" Mesa: "+str(self.number)
