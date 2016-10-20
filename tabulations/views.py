@@ -9,7 +9,7 @@ from rest_framework.permissions import IsAuthenticated
 from menus.models import Product
 from menus.serializers import ProductSerializer
 from .models import Tabulation, Order
-from .serializers import TabulationSerializer, OrderSerializerWrite, OrderSerializerRead
+from .serializers import TabulationSerializerRead,TabulationSerializerWrite, OrderSerializerWrite, OrderSerializerRead
 
 
 class TabulationList(APIView):
@@ -19,15 +19,14 @@ class TabulationList(APIView):
     permission_classes = (IsAuthenticated,)
     def get(self, request, format=None):
         if request.user:
-            establishment = self.request.user
-            tabulations = Tabulation.objects.filter(establishment=establishment)
-            serializer = TabulationSerializer(tabulations, many=True)
+            tabulations = Tabulation.objects.filter(establishment=self.request.user)
+            serializer = TabulationSerializerRead(tabulations, many=True)
             return Response(serializer.data)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def post(self, request, format=None):
-        serializer = TabulationSerializer(data=request.data)
+        serializer = TabulationSerializerWrite(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -43,12 +42,12 @@ class TabulationDetail(APIView):
 
     def get(self, request, uuid, format=None):
         tabulation = self.get_object(uuid)
-        serializer = TabulationSerializer(tabulation)
+        serializer = TabulationSerializerRead(tabulation)
         return Response(serializer.data)
 
     def put(self, request, uuid, format=None):
         tabulation = self.get_object(uuid)
-        serializer = TabulationSerializer(tabulation, data=request.data, partial=True)
+        serializer = TabulationSerializerWrite(tabulation, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)

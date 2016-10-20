@@ -2,6 +2,7 @@ from rest_framework import serializers
 
 from .models import Tabulation, Order
 from menus.serializers import ProductSerializer
+from seats.serializers import SeatSerializer
 
 
 class OrderSerializerWrite(serializers.ModelSerializer):
@@ -16,7 +17,14 @@ class OrderSerializerRead(serializers.ModelSerializer):
         fields = ('id','uuid', 'quantity', 'state', 'tabulation', 'product')
 
 
-class TabulationSerializer(serializers.ModelSerializer):
+class TabulationSerializerRead(serializers.ModelSerializer):
+    orders = OrderSerializerRead(many=True, read_only=True)
+    origin = SeatSerializer(read_only=True)
+    class Meta:
+        model = Tabulation
+        fields = ('id', 'uuid', 'establishment', 'origin', 'date', 'state','value','registered','orders')
+
+class TabulationSerializerWrite(serializers.ModelSerializer):
     orders = OrderSerializerRead(many=True, read_only=True)
     class Meta:
         model = Tabulation
