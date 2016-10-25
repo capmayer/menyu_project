@@ -13,8 +13,16 @@ from .serializers import TabulationSerializerRead,TabulationSerializerWrite, Ord
 
 
 class TabulationList(APIView):
+
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user.id)
+
+    def post(self, request, format=None):
+        serializer = TabulationSerializerWrite(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     permission_classes = (IsAuthenticated,)
     def get(self, request, format=None):
@@ -24,13 +32,6 @@ class TabulationList(APIView):
             return Response(serializer.data)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    def post(self, request, format=None):
-        serializer = TabulationSerializerWrite(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class TabulationDetail(APIView):
     #permission_classes = (permissions.IsAuthenticated,)
