@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'menus',
     'seats',
     'configs',
+    'home',
 
 ]
 

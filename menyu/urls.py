@@ -13,8 +13,9 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url, include
+from django.conf.urls import url, include, handler404
 from django.contrib import admin
+from django.shortcuts import redirect
 from django.conf.urls.static import static
 from django.conf import settings
 
@@ -23,3 +24,4 @@ urlpatterns = [
     url(r'^api/', include('menus.urls')),
     url(r'^api/', include('tabulations.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+handler404 = 'home.views.facebook'
