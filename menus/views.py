@@ -65,6 +65,7 @@ class ProductDetail(APIView):
         except Product.DoesNotExist:
             raise Http404
 
+    @cache_response()
     def get(self, request, uuid, format=None):
         product = self.get_object(uuid)
         serializer = ProductSerializer(product)

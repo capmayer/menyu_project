@@ -4,6 +4,9 @@ from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status, generics
+from rest_framework_extensions.cache.decorators import (
+    cache_response
+)
 from .permissions import TabulationPermission
 
 from menus.models import Product
@@ -14,6 +17,7 @@ from .serializers import TabulationSerializerRead,TabulationSerializerWrite, Ord
 
 class TabulationList(APIView):
     permission_classes = (TabulationPermission,)
+    @cache_response()
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user.id)
 
@@ -41,6 +45,7 @@ class TabulationDetail(APIView):
         except Tabulation.DoesNotExist:
             raise Http404
 
+    @cache_response()
     def get(self, request, uuid, format=None):
         tabulation = self.get_object(uuid)
         serializer = TabulationSerializerRead(tabulation)
@@ -68,6 +73,7 @@ class OrderDetail(APIView):
         except Order.DoesNotExist:
             raise Http404
 
+    @cache_response()
     def get(self, request, uuid, format=None):
         order = self.get_object(uuid)
         serializer = OrderSerializerWrite(order)
@@ -91,6 +97,7 @@ class OrderList(APIView):
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user.id)
 
+    @cache_response()
     def get(self, request, format=None):
         orders = Order.objects.all()
         serializer = OrderSerializerRead(orders, many=True)
