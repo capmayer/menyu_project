@@ -4,6 +4,9 @@ from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status, generics, permissions
+from rest_framework_extensions.cache.decorators import (
+    cache_response
+)
 
 from .models import Menu, Product, Category
 from .serializers import MenuSerializer, ProductSerializer, CategorySerializer
@@ -34,6 +37,7 @@ class MenuDetail(APIView):
         except Menu.DoesNotExist:
             raise Http404
 
+    @cache_response()
     def get(self, request, uuid, format=None):
         menu = self.get_object(uuid)
         serializer = MenuSerializer(menu)
