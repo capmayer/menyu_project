@@ -4,7 +4,7 @@ from . import views
 
 
 urlpatterns = [
-    url(r'^menu/$', views.MenuList.as_view()),
+    #url(r'^menu/$', views.MenuList.as_view()),
     url(r'^menu/(?P<uuid>[^/]+)/$', views.MenuDetail.as_view()),
     url(r'^product/(?P<uuid>[^/]+)/$', views.ProductDetail.as_view()),
 ]
