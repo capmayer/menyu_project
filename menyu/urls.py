@@ -23,5 +23,6 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^api/', include('menus.urls')),
     url(r'^api/', include('tabulations.urls')),
+    url(r'^api/', include('configs.urls'))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 handler404 = 'home.views.facebook'

@@ -3,7 +3,6 @@ import os
 from PIL import Image, ImageDraw, ImageFont
 from django.db import models
 from django.contrib.auth.models import User
-from menus.models import Menu
 from configs.models import Config, Qrcode
 from menyu.settings.base import BASE_DIR
 
@@ -23,9 +22,9 @@ class Seat(models.Model):
         box_size=14,
         border=1,
         ) # create qrcode
-        menu = Menu.objects.get(owner=instance.owner) # find the menu
+        config = Config.objects.get(owner=instance.owner) # find the menu
         #fill the qrcode with uuid of the menu and the table number
-        qr.add_data('"uuid": "'+ str(menu.uuid)+'", "table": ' + str(self.id))
+        qr.add_data('"uuid": "'+ str(config.uuid)+'", "table": ' + str(self.id))
         #make fit? dont know
         qr.make(fit=True)
         #define the name of the qrcode

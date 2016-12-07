@@ -12,7 +12,7 @@ from .permissions import TabulationPermission
 from menus.models import Product
 from menus.serializers import ProductSerializer
 from .models import Tabulation, Order
-from .serializers import TabulationSerializerRead,TabulationSerializerWrite, OrderSerializerWrite, OrderSerializerRead
+from .serializers import TabulationSerializerRead, TabulationSerializerWrite, OrderSerializerWrite, OrderSerializerRead
 
 
 class TabulationList(APIView):
