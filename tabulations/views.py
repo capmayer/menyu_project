@@ -1,5 +1,6 @@
 from django.http import Http404
 from django.shortcuts import render
+import datetime
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -31,7 +32,8 @@ class TabulationList(APIView):
 
     def get(self, request, format=None):
         if request.user:
-            tabulations = Tabulation.objects.filter(establishment=self.request.user) #filters tabulation by requester
+            today = datetime.datetime.today()
+            tabulations = Tabulation.objects.filter(establishment=self.request.user, last_modified__range=[today - datetime.timedelta(days=2), today]) #filters tabulation by requester
             serializer = TabulationSerializerRead(tabulations, many=True)
             return Response(serializer.data)
         else:
