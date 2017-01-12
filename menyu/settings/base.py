@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     'seats',
     'configs',
     'home',
+    'users',
 
 ]
 
