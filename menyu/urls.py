@@ -18,11 +18,15 @@ from django.contrib import admin
 from django.shortcuts import redirect
 from django.conf.urls.static import static
 from django.conf import settings
+from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token, verify_jwt_token
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^api/', include('menus.urls')),
     url(r'^api/', include('tabulations.urls')),
-    url(r'^api/', include('configs.urls'))
+    url(r'^api/', include('configs.urls')),
+    url(r'^api/auth/login/', obtain_jwt_token),
+    url(r'^api/auth/refresh/', refresh_jwt_token),
+    url(r'^api/auth/verify/', verify_jwt_token),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 handler404 = 'home.views.facebook'

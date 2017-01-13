@@ -9,7 +9,7 @@ from rest_framework_extensions.cache.decorators import (
     cache_response
 )
 from .permissions import TabulationPermission
-
+from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from menus.models import Product
 from menus.serializers import ProductSerializer
 from .models import Tabulation, Order
@@ -17,6 +17,7 @@ from .serializers import TabulationSerializerRead, TabulationSerializerWrite, Or
 
 
 class TabulationList(APIView):
+    authentication_classes = (JSONWebTokenAuthentication,)
     permission_classes = (TabulationPermission,)
     @cache_response()
     def perform_create(self, serializer):
