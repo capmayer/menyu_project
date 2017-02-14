@@ -28,5 +28,6 @@ urlpatterns = [
     url(r'^api/auth/login/', obtain_jwt_token),
     url(r'^api/auth/refresh/', refresh_jwt_token),
     url(r'^api/auth/verify/', verify_jwt_token),
+    url(r'$^', include('home.urls'))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 handler404 = 'home.views.facebook'

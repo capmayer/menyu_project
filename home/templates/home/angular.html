@@ -1,0 +1,30 @@
+<!doctype html>
+{% load staticfiles %}
+<html ng-app="menyuApp">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="A front-end template that helps you build fast, modern mobile web apps.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <title>Material Design Lite</title>
+
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Material Design Lite">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
+    <script src="{% static 'jss/menyuAngular.js' %}"></script>
+  </head>
+  <body ng-controller="mainController">
+    <ul>
+    <li ng-repeat="phone in phones">
+      <span>{[{phone.name}]}</span>
+      <p>{[{phone.snippet}]}</p>
+    </li>
+  </ul>
+  </body>
+
+</html>
